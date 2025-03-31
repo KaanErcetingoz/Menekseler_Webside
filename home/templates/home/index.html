@@ -1,0 +1,112 @@
+{% extends "home/base.html" %}
+{% block content %}
+<!-- HOME PAGE CONTENT -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div id="content" class="content">
+                <h2 class="mb-4 text-purple">Hoş Geldiniz</h2>
+                {% if content.content_text %}
+                    <p class="lead">{{ content.content_text }}</p>
+                {% else %}
+                    <p class="lead">Sağlık için sağlıklı beslenin</p>
+                {% endif %}
+
+                {% if content.homepage_image %}
+                    <img src="{{ content.homepage_image.url }}" width="300px;" alt="Ana Sayfa Görseli" class="homepage-image mt-4">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DOCUMENTS SECTION -->
+<div id="documents" class="banner mt-5 mb-4" style="background-image: linear-gradient(rgba(128, 0, 128, 0.7), rgba(128, 0, 128, 0.7)), url('{% if content.banner_image %}{{ content.banner_image.url }}{% endif %}');">
+    <h2 align="center" class="text-white py-3">Documents</h2>
+</div>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body bg-white p-4">
+                    {% if content.documents %}
+                        <div class="document-content">
+                            {{ content.documents|safe }}
+                        </div>
+                    {% else %}
+                        <p class="text-center text-muted">Henüz doküman eklenmemiştir.</p>
+                    {% endif %}
+                    
+                    {% if content.document_files %}
+                        <div class="document-list mt-4">
+                            <h5 class="text-purple mb-3">Dosyalar</h5>
+                            <ul class="list-group list-group-flush">
+                                {% for doc in content.document_files %}
+                                <li class="list-group-item bg-transparent border-0 py-2">
+                                    <a href="{{ doc.file.url }}" class="text-decoration-none d-flex align-items-center">
+                                        <i class="bi bi-file-earmark-text text-purple fs-4 me-3"></i>
+                                        <span class="document-title">{{ doc.title }}</span>
+                                    </a>
+                                    {% if doc.description %}
+                                    <p class="text-muted small ms-5 mb-0 mt-1">{{ doc.description }}</p>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="contact-header bg-purple text-white p-4 rounded-top">
+                        <h3 id="bize-ulasin" class="text-center m-0">Bize Ulaşın</h3>
+                    </div>
+                    <div class="contact-form p-4">
+                        <h5 class="text-center text-purple mb-4">Aşağıdaki formu doldurarak bize mesaj atabilir veya soru sorabilirsiniz</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Adınız" required>
+                                        <label for="name">Adınız</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="E-posta Adresiniz" required>
+                                        <label for="email">E-posta Adresiniz</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="message" name="message" rows="5" style="height: 120px" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                                    <label for="message">Mesajınız</label>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-purple px-4 py-2" style="background-color: #800080; color: white;">
+                                    <i class="bi bi-send me-2"></i>Gönder
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
